@@ -6,12 +6,18 @@ specifiers:
   '@vitejs/plugin-react-swc': ^3.0.0
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-use-event-hook: ^0.9.3
+  scroll-into-area: ^1.0.1
   typescript: ^4.9.3
   vite: ^4.0.0
+  wouter: 2.10.0-alpha.1
 
 dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-use-event-hook: 0.9.3_react@18.2.0
+  scroll-into-area: 1.0.1
+  wouter: 2.10.0-alpha.1_react@18.2.0
 
 devDependencies:
   '@types/react': 18.0.26
@@ -362,6 +368,10 @@ packages:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
     dev: true
 
+  /easing-scroll/1.0.1:
+    resolution: {integrity: sha512-z7a+GzGuqTnM2q87Tbz3epfeObT/AKjItadzsISItQq1FifsGNeqHn+iwW008iaNxCrubnbzQ5DjHAINaSIkqw==}
+    dev: false
+
   /esbuild/0.16.14:
     resolution: {integrity: sha512-6xAn3O6ZZyoxZAEkwfI9hw4cEqSr/o1ViJtnkvImVkblmUN65Md04o0S/7H1WNu1XGf1Cjij/on7VO4psIYjkw==}
     engines: {node: '>=12'}
@@ -461,6 +471,14 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-use-event-hook/0.9.3_react@18.2.0:
+    resolution: {integrity: sha512-8edWglTZ9Z5kfl31EuRjr4MDkTcEczHvrbo2EG1WVrX/a1B2sP3S9RCXjtSwrEnYRw29ldErlvDQNbTOxHNcmQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -491,6 +509,12 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
+  /scroll-into-area/1.0.1:
+    resolution: {integrity: sha512-HGNfO5t+YmDkte+jdVvQELY+orIEBbuQCFs2pWl9fx3W5J3L8gw7P//MhsR5qmemBmCSoVYhJjh2o+jbMXqL0Q==}
+    dependencies:
+      easing-scroll: 1.0.1
+    dev: false
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -506,6 +530,14 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
+
+  /use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /vite/4.0.4:
     resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
@@ -539,3 +571,12 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /wouter/2.10.0-alpha.1_react@18.2.0:
+    resolution: {integrity: sha512-zxqqD7t29B3bWgPQQzMWhQJzMu6PjK5LDMQU2bLbQIUwAneuskwiAvUvBLJeATbu068XIy9StSoAz1iU3Q2mKw==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false

@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-use-event-hook": "^0.9.3",
+    "scroll-into-area": "^1.0.1",
+    "wouter": "2.10.0-alpha.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
