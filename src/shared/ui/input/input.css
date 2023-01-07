@@ -10,7 +10,6 @@
   box-sizing: border-box;
   outline: 0;
   height: 32px;
-  position: relative;
 }
 
 .input:focus {

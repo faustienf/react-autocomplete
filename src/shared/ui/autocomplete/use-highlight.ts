@@ -2,23 +2,17 @@ import { RefObject, useEffect, useState } from "react";
 import { scrollIntoArea } from "scroll-into-area";
 
 import { useKeyUpDown } from "./use-key-updown";
-import { useNumberState } from "./use-number-state";
 
 const downKeys = new Set(["Down", "ArrowDown"]);
-const limit = (target: number) => {
-  return {
-    range: (min: number, max: number) => Math.max(min, Math.min(max, target)),
-  };
-};
 
 export const useHighlight = <E extends Element>(ref: RefObject<E>) => {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
   useEffect(() => {
     const suggestionsEl = ref.current;
-    const max = suggestionsEl?.children.length || 0;
-    setHighlightedIndex((state) => limit(state).range(0, max));
-  }, []);
+    const max = (suggestionsEl?.children.length || 1) - 1;
+    setHighlightedIndex((state) => Math.max(0, Math.min(max, state)));
+  });
 
   useKeyUpDown((e) => {
     if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) {
@@ -30,9 +24,12 @@ export const useHighlight = <E extends Element>(ref: RefObject<E>) => {
 
     const step = downKeys.has(e.key) ? 1 : -1;
     const suggestionsEl = ref.current;
-    const max = suggestionsEl?.children.length || 0;
+    const max = (suggestionsEl?.children.length || 1) - 1;
 
-    setHighlightedIndex((index) => limit(index + step).range(0, max));
+    setHighlightedIndex((index) => {
+      const nextIndex = index + step;
+      return nextIndex < 0 ? max : nextIndex > max ? 0 : nextIndex;
+    });
   });
 
   useEffect(() => {

@@ -1,11 +1,10 @@
-import {
+import React, {
   ComponentProps,
-  MouseEvent,
   ReactNode,
   useRef,
-  RefObject,
   ReactElement,
   memo,
+  useCallback,
 } from "react";
 
 import { useKeyEnter } from "./use-key-enter";
@@ -19,19 +18,20 @@ type ChildProps<S> = {
   highlighted: boolean;
 };
 
-type Props<S> = Omit<ComponentProps<"ul">, "children" | "onSelect"> & {
+type Props<S, T extends keyof JSX.IntrinsicElements> = Omit<
+  ComponentProps<T>,
+  "children" | "onSelect"
+> & {
+  as?: T;
   suggestions: S[];
   onSelect: (suggestion: S, index: number) => void;
   children: (props: ChildProps<S>) => ReactNode;
 };
 
-const preventScroll = (e: MouseEvent<HTMLUListElement>) => {
-  e.preventDefault();
-};
-
-export const Autocomplete = memo(function Autocomplete<S>(props: Props<S>) {
-  const { children, suggestions, onSelect, ...rest } = props;
-
+export const Autocomplete = memo(function Autocomplete<S>(
+  props: Props<S, "ul">
+) {
+  const { as: As = "ul", children, suggestions, onSelect, ...rest } = props;
   const ref = useRef<HTMLUListElement>(null);
   const { highlightedIndex } = useHighlight(ref);
 
@@ -39,8 +39,18 @@ export const Autocomplete = memo(function Autocomplete<S>(props: Props<S>) {
     onSelect(suggestions[highlightedIndex], highlightedIndex);
   });
 
+  const preventEvent = useCallback((e: React.UIEvent<HTMLElement, UIEvent>) => {
+    e.preventDefault();
+  }, []);
+
   return (
-    <ul ref={ref} className="autocomplete" onScroll={preventScroll} {...rest}>
+    <As
+      ref={ref}
+      className="autocomplete"
+      onScroll={preventEvent}
+      onPointerDown={preventEvent}
+      {...rest}
+    >
       {suggestions.map((suggestion, index) =>
         children({
           suggestion,
@@ -49,6 +59,8 @@ export const Autocomplete = memo(function Autocomplete<S>(props: Props<S>) {
           highlighted: highlightedIndex === index,
         })
       )}
-    </ul>
+    </As>
   );
-}) as <S>(props: Props<S>) => ReactElement;
+}) as <S, T extends keyof JSX.IntrinsicElements>(
+  props: Props<S, T>
+) => ReactElement;

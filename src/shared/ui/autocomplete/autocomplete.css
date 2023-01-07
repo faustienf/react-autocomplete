@@ -9,7 +9,7 @@
   overflow: auto;
   max-height: 105px;
   border-radius: 6px;
-  z-index: 9;
+  z-index: 9999;
   width: 100%;
   padding: 0;
   margin: 0;

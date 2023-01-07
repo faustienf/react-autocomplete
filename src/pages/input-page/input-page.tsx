@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { Input } from "../../shared/ui/input";
 import { Autocomplete } from "../../shared/ui/autocomplete";
@@ -12,20 +12,38 @@ const suggestions = [
 ];
 export const InputPage = () => {
   const [value, setValue] = useState("");
-  const [focused, setFocus] = useState(false);
+  const [suggested, suggest] = useState(false);
+
+  const handleChange = useCallback((nextValue: string) => {
+    setValue(nextValue);
+    suggest(true);
+  }, []);
+
+  const handleSelect = useCallback((nextValue: string) => {
+    setValue(nextValue);
+    suggest(false);
+  }, []);
+
+  const simplifiedValue = value.toLocaleLowerCase();
+  const filtredSuggestions = useMemo(() => {
+    return simplifiedValue
+      ? suggestions.filter((suggestion) =>
+          suggestion.toLocaleLowerCase().includes(simplifiedValue)
+        )
+      : [simplifiedValue];
+  }, [simplifiedValue]);
 
   return (
     <div style={{ position: "relative" }}>
       <Input
         value={value}
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-        onChange={(e) => setValue(e.target.value)}
+        onBlur={() => suggest(false)}
+        onChange={(e) => handleChange(e.target.value)}
       />
-      {focused && (
-        <Autocomplete suggestions={suggestions} onSelect={setValue}>
+      {suggested && filtredSuggestions.length > 0 && (
+        <Autocomplete suggestions={filtredSuggestions} onSelect={handleSelect}>
           {({ suggestion, index, highlighted }) => (
-            <li key={index}>
+            <li key={index} onClick={() => handleSelect(suggestion)}>
               {highlighted ? <strong>{suggestion}</strong> : suggestion}
             </li>
           )}
