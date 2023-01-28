@@ -2,16 +2,32 @@
   position: absolute;
   top: 100%;
   left: 0;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: 0 0 0 1px #1e293b;
   line-height: 21px;
+  background-color: #0f172a;
   font-size: 12px;
   overflow: auto;
   max-height: 105px;
-  border-radius: 6px;
+  border-radius: 2px;
   z-index: 9999;
-  width: 100%;
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+.autocomplete-suggestion {
+  padding: 4px 8px;
+  margin: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  display: block;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.autocomplete-suggestion[data-highlighted="true"] {
+  background-color: #1e293b;
 }

@@ -18,49 +18,51 @@ type ChildProps<S> = {
   highlighted: boolean;
 };
 
-type Props<S, T extends keyof JSX.IntrinsicElements> = Omit<
-  ComponentProps<T>,
-  "children" | "onSelect"
-> & {
-  as?: T;
+type Props<S> = Omit<ComponentProps<"div">, "children" | "onSelect"> & {
   suggestions: S[];
   onSelect: (suggestion: S, index: number) => void;
   children: (props: ChildProps<S>) => ReactNode;
 };
 
-export const Autocomplete = memo(function Autocomplete<S>(
-  props: Props<S, "ul">
-) {
-  const { as: As = "ul", children, suggestions, onSelect, ...rest } = props;
-  const ref = useRef<HTMLUListElement>(null);
+const preventEvent = (e: React.UIEvent<HTMLElement, UIEvent>) => {
+  e.preventDefault();
+};
+
+export const Autocomplete = memo(function Autocomplete<S>(props: Props<S>) {
+  const { children, suggestions, onSelect, ...rest } = props;
+
+  const ref = useRef<HTMLDivElement>(null);
   const { highlightedIndex } = useHighlight(ref);
 
-  useKeyEnter(() => {
+  useKeyEnter((e) => {
+    e.preventDefault();
     onSelect(suggestions[highlightedIndex], highlightedIndex);
   });
 
-  const preventEvent = useCallback((e: React.UIEvent<HTMLElement, UIEvent>) => {
-    e.preventDefault();
-  }, []);
-
   return (
-    <As
+    <div
       ref={ref}
       className="autocomplete"
       onScroll={preventEvent}
       onPointerDown={preventEvent}
       {...rest}
     >
-      {suggestions.map((suggestion, index) =>
-        children({
-          suggestion,
-          index,
-          highlightedIndex,
-          highlighted: highlightedIndex === index,
-        })
-      )}
-    </As>
+      {suggestions.map((suggestion, index) => (
+        <button
+          key={index}
+          type="button"
+          className="autocomplete-suggestion"
+          data-highlighted={highlightedIndex === index}
+          onClick={() => onSelect(suggestion, index)}
+        >
+          {children({
+            suggestion,
+            index,
+            highlightedIndex,
+            highlighted: highlightedIndex === index,
+          })}
+        </button>
+      ))}
+    </div>
   );
-}) as <S, T extends keyof JSX.IntrinsicElements>(
-  props: Props<S, T>
-) => ReactElement;
+}) as <S>(props: Props<S>) => ReactElement;

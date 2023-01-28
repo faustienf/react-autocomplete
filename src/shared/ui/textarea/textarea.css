@@ -1,0 +1,49 @@
+.textarea {
+  position: relative;
+  font-family: inherit;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.textarea-target {
+  resize: none;
+  margin: 0;
+  padding: 32px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  color: inherit;
+  background-color: #0f172a;
+  caret-color: #f43f5e;
+  border-radius: 3px;
+  font: inherit;
+  outline: 0;
+}
+
+.textarea-target::placeholder {
+  color: #b0bec5;
+}
+
+.textarea-target[data-view="hidden"] {
+  visibility: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.textarea-target[data-view="native"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.textarea-suggest {
+  position: relative;
+  visibility: visible;
+}
