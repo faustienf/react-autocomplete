@@ -35,12 +35,7 @@ export const TextareaPage = () => {
   });
 
   const handleBlur = useEvent(() => suggest(false));
-
-  useKeyEsc(() => {
-    if (suggested) {
-      suggest(false);
-    }
-  });
+  useKeyEsc(() => suggest(false));
 
   useLayoutEffect(() => {
     const textareaEl = ref.current;
@@ -48,8 +43,10 @@ export const TextareaPage = () => {
       return;
     }
 
-    textareaEl.setSelectionRange(endIndex, endIndex);
-  }, [endIndex]);
+    if (!suggested) {
+      textareaEl.setSelectionRange(endIndex, endIndex);
+    }
+  }, [endIndex, suggested]);
 
   const filtredSuggestions = useSuggestions(word);
   const suggestRenderCause = suggested && filtredSuggestions.length > 0;

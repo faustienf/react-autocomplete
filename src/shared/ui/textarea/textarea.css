@@ -47,4 +47,5 @@
 .textarea-suggest {
   position: relative;
   visibility: visible;
+  display: inline-flex;
 }
