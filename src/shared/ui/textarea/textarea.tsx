@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  forwardRef,
   memo,
   ReactNode,
   TextareaHTMLAttributes,
@@ -20,37 +21,40 @@ type Props = TextareaProps & {
   ) => void;
 };
 
-export const Textarea = memo<Props>(function Textarea(props) {
-  const { value = "", suggest, onChange, ...rest } = props;
+export const Textarea = memo(
+  forwardRef<HTMLTextAreaElement, Props>(function Textarea(props, ref) {
+    const { value = "", suggest, onChange, ...rest } = props;
 
-  const selectionEndRef = useRef(0);
-  const selectionEnd = selectionEndRef.current;
+    const selectionEndRef = useRef(0);
+    const selectionEnd = selectionEndRef.current;
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    selectionEndRef.current = event.target.selectionEnd;
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      selectionEndRef.current = event.target.selectionEnd;
 
-    if (onChange) {
-      onChange(event.target.value, event);
-    }
-  };
+      if (onChange) {
+        onChange(event.target.value, event);
+      }
+    };
 
-  const start = value.substring(0, selectionEnd);
-  const end = value.substring(selectionEnd);
+    const start = value.substring(0, selectionEnd);
+    const end = value.substring(selectionEnd);
 
-  return (
-    <div className="textarea">
-      <div className="textarea-target" data-view="hidden">
-        {start}
-        <span className="textarea-suggest">{suggest}</span>
-        {end} <br />
+    return (
+      <div className="textarea">
+        <div className="textarea-target" data-view="hidden">
+          {start}
+          <span className="textarea-suggest">{suggest}</span>
+          {end} <br />
+        </div>
+        <textarea
+          {...rest}
+          ref={ref}
+          value={value}
+          className="textarea-target"
+          data-view="native"
+          onChange={handleChange}
+        />
       </div>
-      <textarea
-        {...rest}
-        value={value}
-        className="textarea-target"
-        data-view="native"
-        onChange={handleChange}
-      />
-    </div>
-  );
-});
+    );
+  })
+);

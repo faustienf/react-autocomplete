@@ -17,11 +17,12 @@
   caret-color: #f43f5e;
   border-radius: 3px;
   font: inherit;
+  font-weight: bold;
   outline: 0;
 }
 
 .textarea-target::placeholder {
-  color: #b0bec5;
+  color: #64748b;
 }
 
 .textarea-target[data-view="hidden"] {

@@ -27,7 +27,25 @@ body {
   min-height: 100vh;
 }
 
+blockquote {
+  position: relative;
+  margin: 0;
+  padding: 0 40px;
+  margin-bottom: 24px;
+}
+
+blockquote::before {
+  content: "“";
+  font-family: serif;
+  font-size: 60px;
+  line-height: 0;
+  display: block;
+  position: absolute;
+  top: 24px;
+  left: 0;
+}
+
 .app {
   display: grid;
-  grid-template-columns: 400px;
+  grid-template-columns: 500px;
 }

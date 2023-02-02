@@ -4,7 +4,6 @@ import React, {
   useRef,
   ReactElement,
   memo,
-  useCallback,
 } from "react";
 
 import { useKeyEnter } from "./use-key-enter";

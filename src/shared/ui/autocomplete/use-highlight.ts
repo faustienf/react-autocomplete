@@ -8,6 +8,7 @@ const downKeys = new Set(["Down", "ArrowDown"]);
 export const useHighlight = <E extends Element>(ref: RefObject<E>) => {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const suggestionsEl = ref.current;
     const max = (suggestionsEl?.children.length || 1) - 1;
