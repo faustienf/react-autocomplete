@@ -3,10 +3,11 @@ import useEvent from "react-use-event-hook";
 
 import { Textarea } from "../shared/ui/textarea";
 import { Autocomplete } from "../shared/ui/autocomplete";
-import { useSuggestions } from "../shared/use-suggestions";
 import { Highlight } from "../shared/ui/highlight";
 import { insertString } from "../shared/lib/insert-string";
 import { selectWord } from "../shared/lib/select-word";
+import { useKeyEsc } from "../shared/hooks/use-key-esc";
+import { useSuggestions } from "../shared/hooks/use-suggestions";
 
 export const TextareaPage = () => {
   const [value, setValue] = useState("");
@@ -34,6 +35,12 @@ export const TextareaPage = () => {
   });
 
   const handleBlur = useEvent(() => suggest(false));
+
+  useKeyEsc(() => {
+    if (suggested) {
+      suggest(false);
+    }
+  });
 
   useLayoutEffect(() => {
     const textareaEl = ref.current;
