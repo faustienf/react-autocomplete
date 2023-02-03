@@ -47,6 +47,8 @@ blockquote::before {
 }
 
 .app {
-  display: grid;
-  grid-template-columns: 500px;
+  display: flex;
+  max-width: 500px;
+  padding: 16px;
+  box-sizing: content-box;
 }
